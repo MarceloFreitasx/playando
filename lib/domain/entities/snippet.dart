@@ -6,7 +6,7 @@ class SnippetEntity {
   String? title;
   String? description;
   String? channelTitle;
-  String? liveBroadcastContent;
+  bool? liveBroadcast;
   DateTime? publishTime;
   SnippetThumbnailsEntity? thumbnails;
 
@@ -16,7 +16,7 @@ class SnippetEntity {
     this.title,
     this.description,
     this.channelTitle,
-    this.liveBroadcastContent,
+    this.liveBroadcast,
     this.publishTime,
     this.thumbnails,
   });

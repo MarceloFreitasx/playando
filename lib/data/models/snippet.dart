@@ -40,7 +40,7 @@ class SnippetModel {
         title: title,
         description: description,
         channelTitle: channelTitle,
-        liveBroadcastContent: liveBroadcastContent,
+        liveBroadcast: liveBroadcastContent == "live" ? true : false,
         publishTime: publishedAt != null ? DateTime.tryParse(publishTime!)?.toLocal() : null,
         thumbnails: thumbnails?.toEntity(),
       );
