@@ -22,6 +22,8 @@ dependencies:
   #G
   get: ^4.6.1
   get_storage: ^2.0.3
+  #I
+  intl: ^0.17.0
 
 dev_dependencies:
   #F

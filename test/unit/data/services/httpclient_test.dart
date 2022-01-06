@@ -7,20 +7,20 @@ import 'package:playando/data/services/services.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late HttpClient api;
+  late HttpClient httpClient;
   late String url;
   late HttpResponse response;
 
   setUp(() {
-    api = MockHttpClient();
+    httpClient = MockHttpClient();
     url = faker.internet.httpsUrl();
     response = HttpResponse(faker.vehicle.vehicle(), HttpStatus.success);
   });
 
   test('Should call HttpClient with correct URL', () async {
-    when(() => api.call(HttpMethod.get, url)).thenAnswer((_) async => response);
+    when(() => httpClient.call(HttpMethod.get, url)).thenAnswer((_) async => response);
 
-    expect(await api.call(HttpMethod.get, url), response);
+    expect(await httpClient.call(HttpMethod.get, url), response);
   });
 }
 
