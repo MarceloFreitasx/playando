@@ -1,6 +1,5 @@
 import 'package:playando/data/models/models.dart';
 import 'package:playando/domain/entities/entities.dart';
-import 'package:playando/domain/entities/thumbnail.dart';
 import 'package:test/test.dart';
 
 void main() {

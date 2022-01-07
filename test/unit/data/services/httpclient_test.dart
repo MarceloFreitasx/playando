@@ -6,6 +6,8 @@ import 'package:playando/data/models/http_response.dart';
 import 'package:playando/data/services/services.dart';
 import 'package:test/test.dart';
 
+import '../mocks.dart';
+
 void main() {
   late HttpClient httpClient;
   late String url;
@@ -23,5 +25,3 @@ void main() {
     expect(await httpClient.call(HttpMethod.get, url), response);
   });
 }
-
-class MockHttpClient extends Mock implements HttpClient {}

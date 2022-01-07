@@ -16,6 +16,8 @@ environment:
 dependencies:
   #C
   cupertino_icons: ^1.0.2
+  #D
+  dio: ^4.0.4
   #F
   flutter:
     sdk: flutter
