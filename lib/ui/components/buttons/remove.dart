@@ -15,7 +15,7 @@ class RemoveButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: CircleAvatar(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.secondary,
         child: const Icon(
           Icons.cancel_outlined,
           color: Colors.white,

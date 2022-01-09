@@ -8,7 +8,9 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AddButton(),
+            body: CustomButton(
+              title: "Adicionar",
+            ),
           ),
         ),
       );
@@ -27,7 +29,7 @@ void main() {
       );
 
       await tester.pump();
-      expect(find.text("Filtrar"), findsOneWidget);
+      expect(find.byIcon(Icons.filter_alt_rounded), findsOneWidget);
 
       await tester.pumpWidget(
         const MaterialApp(
@@ -40,7 +42,7 @@ void main() {
       );
 
       await tester.pump();
-      expect(find.text("Limpar Filtro"), findsOneWidget);
+      expect(find.byIcon(Icons.cancel_rounded), findsOneWidget);
     });
 
     testWidgets("PlayPauseButton", (WidgetTester tester) async {
@@ -66,7 +68,7 @@ void main() {
       );
 
       await tester.pump();
-      expect(find.byIcon(Icons.pause_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.play_arrow_rounded), findsOneWidget);
     });
 
     testWidgets("RemoveButton", (WidgetTester tester) async {
