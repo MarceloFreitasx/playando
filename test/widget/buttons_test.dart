@@ -68,7 +68,7 @@ void main() {
       );
 
       await tester.pump();
-      expect(find.byIcon(Icons.play_arrow_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.pause_rounded), findsOneWidget);
     });
 
     testWidgets("RemoveButton", (WidgetTester tester) async {

@@ -6,6 +6,7 @@ class VideoCard extends StatelessWidget {
   const VideoCard({
     Key? key,
     required this.title,
+    required this.thumbnail,
     this.onPlayPause,
     this.onDelete,
     this.playing = false,
@@ -15,19 +16,19 @@ class VideoCard extends StatelessWidget {
   final VoidCallback? onPlayPause;
   final VoidCallback? onDelete;
   final String title;
+  final String thumbnail;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           Stack(
             clipBehavior: Clip.none,
             children: [
-              const AspectRatio(
+              AspectRatio(
                 aspectRatio: 16 / 9,
-                child: CachedImageNetwork(url: "https://i.ytimg.com/vi/dh6ob389CYU/hqdefault.jpg"),
+                child: CachedImageNetwork(url: thumbnail),
               ),
               Positioned(
                 bottom: -15,
