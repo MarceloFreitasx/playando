@@ -11,5 +11,6 @@ class PagesRoutes {
   static final routes = [
     //General Routes
     GetPage(name: AppRoutes.home, page: () => const HomeView()),
+    GetPage(name: AppRoutes.search, page: () => const SearchView()),
   ];
 }

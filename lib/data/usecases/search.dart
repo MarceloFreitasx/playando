@@ -15,14 +15,17 @@ class SearchUseCase implements SearchRepository {
     try {
       final result = await api.call(
         HttpMethod.get,
-        ApiRoutes.search,
+        ApiRoutes.search(term),
       );
 
-      final data = result.data as List;
-      return List<SnippetEntity>.from(data.map((e) => SnippetModel.fromJson(e).toEntity()));
+      final data = result.data["items"] as List;
+
+      return List<SnippetEntity>.from(
+          data.map((e) => SnippetModel.fromJson(e['snippet']).toEntity()));
     } on HttpResponse catch (_) {
       rethrow;
     } catch (e) {
+      print(e);
       rethrow;
     }
   }

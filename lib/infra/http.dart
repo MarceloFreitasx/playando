@@ -36,9 +36,9 @@ class HttpService implements HttpClient {
     httpClient.options.headers.addAll({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // Add authentication token to header if necessary
-      'Authorization': 'Bearer ${Env.to!.token}',
     });
+
+    url = url + "&key=${Env.to!.token}";
 
     late Response response;
     switch (type) {

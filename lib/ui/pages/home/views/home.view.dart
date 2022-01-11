@@ -23,13 +23,13 @@ class HomeView extends GetViewCP<HomeController, HomePresenter> {
               : SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (_, index) {
+                      final item = presenter.listVideos[index];
                       return Obx(() => VideoCard(
-                            title:
-                                "Cooking with Marshmello: How To Make Greek Salad Hello loves, This week on Cooking with Marshmello we make the best",
-                            thumbnail: "https://i.ytimg.com/vi/dh6ob389CYU/hqdefault.jpg",
-                            playing: presenter.videoPlaying == index,
-                            onPlayPause: () => controller.onPlayVideo(index),
-                            onDelete: () => controller.onDeleteVideo(index),
+                            title: item.title!,
+                            thumbnail: item.thumbnails!.high!.url!,
+                            playing: presenter.videoPlaying == item,
+                            onPlayPause: () => controller.onPlayVideo(item),
+                            onDelete: () => controller.onDeleteVideo(item),
                           ));
                     },
                     childCount: presenter.listVideos.length,

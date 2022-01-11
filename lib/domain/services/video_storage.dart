@@ -22,7 +22,7 @@ class VideoStorage extends GetxController implements VideoStorageData {
   List<SnippetEntity> get videosList => _videosList;
 
   @override
-  List<Map<String, dynamic>> read() => _box.read();
+  List<dynamic> read() => _box.read();
 
   @override
   void write(List<SnippetEntity> value) => _box.write(value.map((e) => e.toJson()).toList());

@@ -1,7 +1,6 @@
 import '../../../domain/entities/entities.dart';
-import '../../../domain/mixins/mixins.dart';
 
-abstract class HomePresenter with LoadingMixin {
+abstract class HomePresenter {
   List<SnippetEntity> get listVideos;
 
   bool get isYoutubeUrl;
@@ -10,6 +9,6 @@ abstract class HomePresenter with LoadingMixin {
   bool get isListFiltered;
   set isListFiltered(bool value);
 
-  int get videoPlaying;
-  set videoPlaying(int value);
+  SnippetEntity? get videoPlaying;
+  set videoPlaying(SnippetEntity? value);
 }

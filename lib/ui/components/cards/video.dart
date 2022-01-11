@@ -30,26 +30,29 @@ class VideoCard extends StatelessWidget {
                 aspectRatio: 16 / 9,
                 child: CachedImageNetwork(url: thumbnail),
               ),
-              Positioned(
-                bottom: -15,
-                left: 20,
-                right: 20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    PlayPauseButton(
-                      onTap: onPlayPause,
-                      playing: playing,
-                    ),
-                    RemoveButton(
-                      onTap: onDelete,
-                    ),
-                  ],
+              if (onPlayPause != null && onDelete != null)
+                Positioned(
+                  bottom: -15,
+                  left: 20,
+                  right: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (onPlayPause != null)
+                        PlayPauseButton(
+                          onTap: onPlayPause,
+                          playing: playing,
+                        ),
+                      if (onDelete != null)
+                        RemoveButton(
+                          onTap: onDelete,
+                        ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
-          const SizedBox(height: 15),
+          if (onPlayPause != null && onDelete != null) const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(

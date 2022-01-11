@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../data/services/services.dart';
-import '../../domain/entities/snippet.dart';
-import '../../domain/entities/thumbnail.dart';
+import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
+import '../navigator/navigator.dart';
 
 class HomeControl implements HomeController {
   HomeControl(this._presenter);
@@ -17,23 +17,34 @@ class HomeControl implements HomeController {
   final searchController = TextEditingController();
 
   @override
-  void onPlayVideo(int index) {
-    if (_presenter.videoPlaying == index) {
-      _presenter.videoPlaying = -1;
+  void onPlayVideo(SnippetEntity item) {
+    if (_presenter.videoPlaying == item) {
+      _presenter.videoPlaying = null;
       return;
     }
-    _presenter.videoPlaying = index;
+    _presenter.videoPlaying = item;
   }
 
   @override
-  void onDeleteVideo(int index) {
-    _presenter.listVideos.removeAt(index);
+  void onDeleteVideo(SnippetEntity index) {
+    if (_presenter.videoPlaying == index) {
+      _presenter.videoPlaying = null;
+    }
+    _presenter.listVideos.remove(index);
     VideoStorageData.to.write(_presenter.listVideos);
   }
 
   @override
-  void onAddVideoTap() {
-    print(searchController.text);
+  void onAddVideoTap() async {
+    final result = await Get.toNamed(AppRoutes.search, arguments: searchController.text);
+
+    if (result != null && result is SnippetEntity) {
+      _presenter.listVideos.add(result);
+      VideoStorageData.to.write(_presenter.listVideos);
+      searchController.clear();
+      _presenter.isYoutubeUrl = false;
+    }
+    /* print(searchController.text);
     print(_presenter.isYoutubeUrl);
     searchController.clear();
     _presenter.isYoutubeUrl = false;
@@ -67,7 +78,7 @@ class HomeControl implements HomeController {
     );
 
     _presenter.listVideos.add(entity);
-    VideoStorageData.to.write(_presenter.listVideos);
+    VideoStorageData.to.write(_presenter.listVideos); */
   }
 
   @override

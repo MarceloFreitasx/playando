@@ -7,6 +7,6 @@ abstract class VideoStorageData {
 
   List<SnippetEntity> get videosList;
 
-  List<Map<String, dynamic>> read();
+  List<dynamic> read();
   void write(List<SnippetEntity> value);
 }

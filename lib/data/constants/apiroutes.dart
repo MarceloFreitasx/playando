@@ -1,5 +1,5 @@
 class ApiRoutes {
   ApiRoutes._();
 
-  static const String search = "search";
+  static String search(String term) => "search?part=snippet&q=$term";
 }

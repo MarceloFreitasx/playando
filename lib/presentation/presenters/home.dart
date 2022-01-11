@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import '../../data/services/video_storage.dart';
 import '../../domain/entities/snippet.dart';
 import '../../ui/pages/pages.dart';
-import '../mixins/mixins.dart';
 
-class HomePresentation extends GetxController with LoadingManager implements HomePresenter {
+class HomePresentation extends GetxController implements HomePresenter {
   HomePresentation() {
     _listVideos.assignAll(VideoStorageData.to.videosList);
   }
@@ -13,7 +12,7 @@ class HomePresentation extends GetxController with LoadingManager implements Hom
   final _listVideos = RxList<SnippetEntity>.empty();
   final _isYoutubeUrl = RxBool(false);
   final _isListFiltered = RxBool(false);
-  final _videoPlaying = RxInt(-1);
+  final _videoPlaying = Rxn<SnippetEntity>();
 
   @override
   List<SnippetEntity> get listVideos => _listVideos;
@@ -33,10 +32,10 @@ class HomePresentation extends GetxController with LoadingManager implements Hom
   }
 
   @override
-  int get videoPlaying => _videoPlaying.value;
+  SnippetEntity? get videoPlaying => _videoPlaying.value;
 
   @override
-  set videoPlaying(int value) {
+  set videoPlaying(SnippetEntity? value) {
     _videoPlaying.value = value;
   }
 }
