@@ -1,14 +1,15 @@
 import 'package:get/get.dart';
 
-import '../../data/services/video_storage.dart';
-import '../../domain/entities/snippet.dart';
+import '../../data/services/services.dart';
+import '../../domain/entities/entities.dart';
 import '../../ui/pages/pages.dart';
 
 class HomePresentation extends GetxController implements HomePresenter {
   HomePresentation() {
-    _listVideos.assignAll(VideoStorageData.to.videosList);
+    clearFilter();
   }
 
+  final _originalListVideos = <SnippetEntity>[];
   final _listVideos = RxList<SnippetEntity>.empty();
   final _isYoutubeUrl = RxBool(false);
   final _isListFiltered = RxBool(false);
@@ -16,6 +17,9 @@ class HomePresentation extends GetxController implements HomePresenter {
 
   @override
   List<SnippetEntity> get listVideos => _listVideos;
+
+  @override
+  List<SnippetEntity> get originalListVideos => _originalListVideos;
 
   @override
   bool get isYoutubeUrl => _isYoutubeUrl.value;
@@ -29,6 +33,7 @@ class HomePresentation extends GetxController implements HomePresenter {
   @override
   set isListFiltered(bool value) {
     _isListFiltered.value = value;
+    if (!value) clearFilter();
   }
 
   @override
@@ -37,5 +42,12 @@ class HomePresentation extends GetxController implements HomePresenter {
   @override
   set videoPlaying(SnippetEntity? value) {
     _videoPlaying.value = value;
+  }
+
+  @override
+  void clearFilter() {
+    _isListFiltered.value = false;
+    _originalListVideos.assignAll(VideoStorageData.to.videosList);
+    _listVideos.assignAll(_originalListVideos);
   }
 }

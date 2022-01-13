@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../data/helpers/helpers.dart';
-import '../../domain/mixins/loadingstatus.dart';
+import '../../domain/mixins/mixins.dart';
 
 mixin LoadingManager on GetxController implements LoadingMixin {
   final _loadingStatus = LoadingStatus.completed.obs;

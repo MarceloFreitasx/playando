@@ -1,5 +1,5 @@
 import '../../domain/entities/entities.dart';
-import 'thumbnail.dart';
+import 'models.dart';
 
 class SnippetModel {
   String? publishedAt;
@@ -37,7 +37,7 @@ class SnippetModel {
   SnippetEntity toEntity() => SnippetEntity(
         publishedAt: publishedAt != null ? DateTime.tryParse(publishedAt!)?.toLocal() : null,
         channelId: channelId,
-        title: title,
+        title: title!,
         description: description,
         channelTitle: channelTitle,
         liveBroadcast: liveBroadcastContent == "live" ? true : false,

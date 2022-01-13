@@ -3,7 +3,7 @@ import 'entities.dart';
 class SnippetEntity {
   DateTime? publishedAt;
   String? channelId;
-  String? title;
+  String title;
   String? description;
   String? channelTitle;
   bool? liveBroadcast;
@@ -13,7 +13,7 @@ class SnippetEntity {
   SnippetEntity({
     this.publishedAt,
     this.channelId,
-    this.title,
+    required this.title,
     this.description,
     this.channelTitle,
     this.liveBroadcast,
@@ -24,7 +24,7 @@ class SnippetEntity {
   factory SnippetEntity.fromJson(Map<String, dynamic> json) => SnippetEntity(
         publishedAt: DateTime.tryParse(json["publishedAt"]),
         channelId: json["channelId"] as String?,
-        title: json["title"] as String?,
+        title: json["title"] as String,
         description: json["description"] as String?,
         channelTitle: json["channelTitle"] as String?,
         liveBroadcast: json["liveBroadcast"] as bool?,

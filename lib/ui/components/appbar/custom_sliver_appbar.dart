@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../validators/validators.dart';
 import '../../helpers/helpers.dart';
 import '../../styles/styles.dart';
 import '../components.dart';
@@ -10,6 +11,7 @@ class CustomSliverAppBar extends StatelessWidget {
     this.title = "Playando",
     this.actions,
     this.onTap,
+    this.formKey,
     this.controller,
     this.onChanged,
     this.isYoutubeUrl = false,
@@ -17,6 +19,7 @@ class CustomSliverAppBar extends StatelessWidget {
 
   final String title;
   final List<Widget>? actions;
+  final GlobalKey<FormState>? formKey;
   final TextEditingController? controller;
   final VoidCallback? onTap;
   final ValueChanged<String>? onChanged;
@@ -47,10 +50,14 @@ class CustomSliverAppBar extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: CustomTextField(
-                        hint: "Link ou Título do Vídeo",
-                        controller: controller,
-                        onChanged: onChanged,
+                      child: Form(
+                        key: formKey,
+                        child: CustomTextField(
+                          hint: "Link ou Título do Vídeo",
+                          controller: controller,
+                          onChanged: onChanged,
+                          validator: DefaultRequiredValidator(),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),

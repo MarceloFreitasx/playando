@@ -7,18 +7,16 @@ import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
 class SearchPresentation extends GetxController with LoadingManager implements SearchPresenter {
-  SearchPresentation(this._repository) {
-    print(Get.arguments);
-    findVideo(Get.arguments);
-  }
-
-  final _listVideos = RxList<SnippetEntity>.empty();
+  SearchPresentation(this._repository);
 
   final SearchRepository _repository;
+
+  final _listVideos = RxList<SnippetEntity>.empty();
 
   @override
   List<SnippetEntity> get listVideos => _listVideos;
 
+  @override
   void findVideo(String term) async {
     _listVideos.clear();
     try {
@@ -30,5 +28,20 @@ class SearchPresentation extends GetxController with LoadingManager implements S
     } catch (_) {
       loadingStatus = LoadingStatus.error;
     }
+  }
+
+  @override
+  Future<SnippetEntity?> findVideoByUrl(String url) async {
+    _listVideos.clear();
+    try {
+      loadingStatus = LoadingStatus.loading;
+      return await _repository.getVideoByUrl(url).then((value) {
+        loadingStatus = LoadingStatus.completed;
+        return value;
+      });
+    } catch (_) {
+      loadingStatus = LoadingStatus.error;
+    }
+    return null;
   }
 }

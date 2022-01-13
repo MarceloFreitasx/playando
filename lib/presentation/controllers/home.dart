@@ -14,6 +14,9 @@ class HomeControl implements HomeController {
   final _filterController = TextEditingController();
 
   @override
+  final formKey = GlobalKey<FormState>();
+
+  @override
   final searchController = TextEditingController();
 
   @override
@@ -26,59 +29,40 @@ class HomeControl implements HomeController {
   }
 
   @override
-  void onDeleteVideo(SnippetEntity index) {
-    if (_presenter.videoPlaying == index) {
+  void onDeleteVideo(SnippetEntity item) {
+    if (_presenter.videoPlaying == item) {
       _presenter.videoPlaying = null;
     }
-    _presenter.listVideos.remove(index);
-    VideoStorageData.to.write(_presenter.listVideos);
+    _presenter.originalListVideos.remove(item);
+    VideoStorageData.to.write(_presenter.originalListVideos);
+
+    if (_presenter.isListFiltered) {
+      _filterVideoList(_filterController.text);
+    }
   }
 
   @override
   void onAddVideoTap() async {
-    final result = await Get.toNamed(AppRoutes.search, arguments: searchController.text);
+    if (formKey.currentState!.validate()) {
+      dynamic result;
+      if (_presenter.isYoutubeUrl) {
+        result = await Get.toNamed(AppRoutes.search, arguments: {
+          'videoUrl': searchController.text,
+        });
+      } else {
+        result = await Get.toNamed(AppRoutes.search, arguments: {
+          'title': searchController.text,
+        });
+      }
 
-    if (result != null && result is SnippetEntity) {
-      _presenter.listVideos.add(result);
-      VideoStorageData.to.write(_presenter.listVideos);
-      searchController.clear();
-      _presenter.isYoutubeUrl = false;
+      if (result != null && result is SnippetEntity) {
+        _presenter.originalListVideos.add(result);
+        VideoStorageData.to.write(_presenter.originalListVideos);
+        searchController.clear();
+        _presenter.isYoutubeUrl = false;
+        _presenter.clearFilter();
+      }
     }
-    /* print(searchController.text);
-    print(_presenter.isYoutubeUrl);
-    searchController.clear();
-    _presenter.isYoutubeUrl = false;
-
-    final entity = SnippetEntity(
-      publishedAt: DateTime.now(),
-      channelId: "UCDpenlfHFtjdGpqi8slPybg",
-      title: "Cooking with Marshmello: How To Make Greek Salad",
-      description:
-          "Cooking with Marshmello: How To Make Greek Salad Hello loves, This week on Cooking with Marshmello we make the best ...",
-      thumbnails: SnippetThumbnailsEntity(
-        defaulte: ThumbnailEntity(
-          url: "https://i.ytimg.com/vi/dh6ob389CYU/default.jpg",
-          width: 120,
-          height: 90,
-        ),
-        medium: ThumbnailEntity(
-          url: "https://i.ytimg.com/vi/dh6ob389CYU/mqdefault.jpg",
-          width: 320,
-          height: 180,
-        ),
-        high: ThumbnailEntity(
-          url: "https://i.ytimg.com/vi/dh6ob389CYU/hqdefault.jpg",
-          width: 480,
-          height: 360,
-        ),
-      ),
-      channelTitle: "Cooking With Marshmello",
-      liveBroadcast: false,
-      publishTime: DateTime.now(),
-    );
-
-    _presenter.listVideos.add(entity);
-    VideoStorageData.to.write(_presenter.listVideos); */
   }
 
   @override
@@ -89,16 +73,26 @@ class HomeControl implements HomeController {
   @override
   void onFilterTap() {
     if (_presenter.isListFiltered) {
-      _presenter.isListFiltered = false;
+      _presenter.clearFilter();
+      _filterController.clear();
     } else {
       Get.bottomSheet(FilterFormWidget(
         initialValue: _filterController.text,
         onTap: (value) {
           _presenter.isListFiltered = true;
           _filterController.text = value;
+          _filterVideoList(value);
           Get.back();
         },
       ));
     }
+  }
+
+  void _filterVideoList(String value) {
+    final _regex = RegExp('(' + value.toLowerCase().split('').join(').*(') + ')');
+    final _items =
+        _presenter.originalListVideos.where((e) => e.title.toLowerCase().contains(_regex)).toList();
+
+    _presenter.listVideos.assignAll(_items);
   }
 }

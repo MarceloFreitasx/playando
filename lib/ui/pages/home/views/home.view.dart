@@ -10,43 +10,52 @@ class HomeView extends GetViewCP<HomeController, HomePresenter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          Obx(() => CustomSliverAppBar(
-                controller: controller.searchController,
-                onTap: controller.onAddVideoTap,
-                onChanged: controller.onVideoTextChanged,
-                isYoutubeUrl: presenter.isYoutubeUrl,
-              )),
-          Obx(() => presenter.listVideos.isEmpty
-              ? const SliverFillRemaining(child: EmptyList())
-              : SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (_, index) {
-                      final item = presenter.listVideos[index];
-                      return Obx(() => VideoCard(
-                            title: item.title!,
-                            thumbnail: item.thumbnails!.high!.url!,
-                            playing: presenter.videoPlaying == item,
-                            onPlayPause: () => controller.onPlayVideo(item),
-                            onDelete: () => controller.onDeleteVideo(item),
-                          ));
-                    },
-                    childCount: presenter.listVideos.length,
-                  ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: CustomScrollView(
+          slivers: [
+            Obx(() => CustomSliverAppBar(
+                  formKey: controller.formKey,
+                  controller: controller.searchController,
+                  onTap: controller.onAddVideoTap,
+                  onChanged: controller.onVideoTextChanged,
+                  isYoutubeUrl: presenter.isYoutubeUrl,
                 )),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text(
-                "Feito por Marcelo Freitas",
-                textAlign: TextAlign.center,
+            Obx(() => presenter.listVideos.isEmpty
+                ? const SliverFillRemaining(child: EmptyList())
+                : SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (_, index) {
+                        final item = presenter.listVideos[index];
+                        return Obx(() => VideoCard(
+                              title: item.title,
+                              thumbnail: item.thumbnails!.high!.url!,
+                              playing: presenter.videoPlaying == item,
+                              onPlayPause: () => controller.onPlayVideo(item),
+                              onDelete: () => controller.onDeleteVideo(item),
+                            ));
+                      },
+                      childCount: presenter.listVideos.length,
+                    ),
+                  )),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  "Feito por Marcelo Freitas",
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      floatingActionButton: Obx(() => presenter.listVideos.isEmpty
+      floatingActionButton: Obx(() => presenter.originalListVideos.isEmpty
           ? const SizedBox.shrink()
           : FilterButton(
               clear: presenter.isListFiltered,

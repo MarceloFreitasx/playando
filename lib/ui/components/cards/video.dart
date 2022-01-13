@@ -30,7 +30,7 @@ class VideoCard extends StatelessWidget {
                 aspectRatio: 16 / 9,
                 child: CachedImageNetwork(url: thumbnail),
               ),
-              if (onPlayPause != null && onDelete != null)
+              if (onPlayPause != null || onDelete != null)
                 Positioned(
                   bottom: -15,
                   left: 20,

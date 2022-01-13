@@ -13,7 +13,7 @@ class CachedImageNetwork extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: url,
-      placeholder: (context, url) => const CircularProgressIndicator(),
+      placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, error) => const Icon(Icons.error),
       fit: BoxFit.cover,
     );

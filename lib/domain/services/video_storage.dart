@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import '../../data/services/localstorage.dart';
 import '../../data/services/services.dart';
 import '../entities/entities.dart';
 

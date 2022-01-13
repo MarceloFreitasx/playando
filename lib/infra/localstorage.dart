@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 
-import '../data/services/localstorage.dart';
+import '../data/services/services.dart';
 
 class LocalStorageService<T> implements LocalStorageData {
   LocalStorageService(this._key);

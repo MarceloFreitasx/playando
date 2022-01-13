@@ -6,12 +6,13 @@ void main() {
   group("Cards widgets tests:", () {
     testWidgets("Video Card", (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
             body: VideoCard(
               title:
                   "Cooking with Marshmello: How To Make Greek Salad Hello loves, This week on Cooking with Marshmello we make the best",
               thumbnail: "https://i.ytimg.com/vi/dh6ob389CYU/hqdefault.jpg",
+              onPlayPause: () {},
             ),
           ),
         ),
@@ -25,12 +26,13 @@ void main() {
       expect(find.byIcon(Icons.play_arrow_rounded), findsOneWidget);
 
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
             body: VideoCard(
               title:
                   "Cooking with Marshmello: How To Make Greek Salad Hello loves, This week on Cooking with Marshmello we make the best",
               thumbnail: "https://i.ytimg.com/vi/dh6ob389CYU/hqdefault.jpg",
+              onPlayPause: () {},
               playing: true,
             ),
           ),

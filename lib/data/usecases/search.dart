@@ -25,7 +25,24 @@ class SearchUseCase implements SearchRepository {
     } on HttpResponse catch (_) {
       rethrow;
     } catch (e) {
-      print(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<SnippetEntity?> getVideoByUrl(String url) async {
+    try {
+      final result = await api.call(
+        HttpMethod.get,
+        ApiRoutes.search(url),
+      );
+
+      final data = result.data["items"] as List;
+
+      return data.isEmpty ? null : SnippetModel.fromJson(data.first['snippet']).toEntity();
+    } on HttpResponse catch (_) {
+      rethrow;
+    } catch (_) {
       rethrow;
     }
   }

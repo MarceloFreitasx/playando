@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../components/components.dart';
 import '../search.dart';
-import '../widgets/empty_list.dart';
+import '../widgets/widgets.dart';
 
 class SearchView extends GetViewCP<SearchController, SearchPresenter> {
   const SearchView({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class SearchView extends GetViewCP<SearchController, SearchPresenter> {
                           return GestureDetector(
                             onTap: () => controller.onVideoTap(index),
                             child: VideoCard(
-                              title: item.title!,
+                              title: item.title,
                               thumbnail: item.thumbnails!.high!.url!,
                             ),
                           );

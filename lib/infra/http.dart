@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 import '../data/helpers/helpers.dart';
 import '../data/models/models.dart';
@@ -50,7 +47,7 @@ class HttpService implements HttpClient {
         break;
     }
 
-    if (Env.to!.ambiente == 'dev') {
+    /* if (Env.to!.ambiente == 'dev') {
       log("======start======");
       log("url: ${type.toString()} ${httpClient.options.baseUrl}$url");
       debugPrint("params: $data", wrapWidth: 1024);
@@ -58,7 +55,7 @@ class HttpService implements HttpClient {
       log("status: ${response.statusCode}");
       debugPrint("response: ${response.data}", wrapWidth: 1024);
       log("=======end=======");
-    }
+    } */
 
     switch (response.statusCode) {
       case 200:

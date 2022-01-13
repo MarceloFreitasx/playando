@@ -1,5 +1,5 @@
-import '../helpers/http_method.dart';
-import '../models/http_response.dart';
+import '../helpers/helpers.dart';
+import '../models/models.dart';
 
 abstract class HttpClient {
   Future<HttpResponse> call(

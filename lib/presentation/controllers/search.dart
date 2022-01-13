@@ -5,10 +5,21 @@ import '../../ui/pages/pages.dart';
 
 class SearchControl implements SearchController {
   SearchControl(this._presenter) {
-    title = Get.arguments;
+    _arguments = Get.arguments as Map<String, String>;
+
+    if (_arguments.containsKey('title')) {
+      title = _arguments['title']!;
+      _presenter.findVideo(_arguments['title']!);
+    }
+
+    if (_arguments.containsKey('videoUrl')) {
+      title = _arguments['videoUrl']!;
+      _getVideoByUrl();
+    }
   }
 
   final SearchPresenter _presenter;
+  late Map<String, String> _arguments;
 
   @override
   late String title;
@@ -26,5 +37,10 @@ class SearchControl implements SearchController {
       icon: const Icon(Icons.help),
       snackPosition: SnackPosition.BOTTOM,
     );
+  }
+
+  void _getVideoByUrl() async {
+    final _video = await _presenter.findVideoByUrl(_arguments['videoUrl']!);
+    Get.back(result: _video);
   }
 }
